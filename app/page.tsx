@@ -108,7 +108,7 @@ export default function HomePage() {
         <div className="flex justify-center md:justify-end">
           <div className="rounded-[2rem] border border-black/10 bg-white p-8 shadow-[0_20px_80px_rgba(0,0,0,0.08)]">
             <Image
-              src="/logo.png"
+              src="/logo2.png"
               alt="Untouchable Carpet Repair brand mark"
               width={420}
               height={420}

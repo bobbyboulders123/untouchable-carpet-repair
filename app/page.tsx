@@ -92,6 +92,34 @@ const reasons = [
   },
 ];
 
+const faqItems = [
+  {
+    question: "Do you offer free estimates?",
+    answer:
+      "Yes. You can call to schedule a free estimate and get honest guidance on the best repair option for your carpet.",
+  },
+  {
+    question: "Can carpet be repaired instead of replaced?",
+    answer:
+      "In many cases, yes. Stretching, patching, and targeted repair work can improve appearance and extend the life of your carpet without full replacement.",
+  },
+  {
+    question: "What types of carpet damage do you repair?",
+    answer:
+      "We handle issues like ripples, loose carpet, damaged sections, seams, stains, pet-related damage, threshold concerns, and some water-damaged areas.",
+  },
+  {
+    question: "Do you serve Denver and surrounding areas?",
+    answer:
+      "Denver, Colorado is our primary service area. Call to confirm your location and availability for an estimate.",
+  },
+  {
+    question: "What are your business hours?",
+    answer:
+      "We are open Monday through Saturday from 9:00am to 5:00pm, and closed on Sunday.",
+  },
+];
+
 function BeforeAfterShowcase({
   items,
 }: {
@@ -216,6 +244,10 @@ function BeforeAfterShowcase({
           </div>
         </button>
 
+        <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-[var(--muted)] md:hidden">
+          Tap image to switch between before and after
+        </p>
+
         <div className="mt-6 max-w-3xl">
           <h3 className="text-2xl font-semibold tracking-tight text-[var(--ink)]">
             {activeItem.title}
@@ -226,6 +258,86 @@ function BeforeAfterShowcase({
         </div>
       </div>
     </div>
+  );
+}
+
+function FAQSection({
+  items,
+}: {
+  items: { question: string; answer: string }[];
+}) {
+  const [openIndex, setOpenIndex] = useState<number>(0);
+
+  return (
+    <section className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
+      <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+        <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+          <div data-reveal className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
+              FAQ
+            </p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">
+              Helpful answers before you call.
+            </h2>
+            <p className="mt-5 max-w-lg text-lg leading-8 text-[var(--muted)]">
+              A few common questions about estimates, repair options, service
+              area, and scheduling.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {items.map((item, index) => {
+              const open = index === openIndex;
+
+              return (
+                <article
+                  key={item.question}
+                  data-reveal
+                  className="card-tint rounded-[1.5rem] border border-[color:rgba(199,163,90,0.22)] p-5 shadow-[0_14px_36px_rgba(0,0,0,0.04)]"
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                >
+                  <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setOpenIndex((prev) => (prev === index ? -1 : index))
+                    }
+                    className="flex w-full items-center justify-between gap-4 text-left"
+                    aria-expanded={open}
+                  >
+                    <span className="text-lg font-semibold tracking-tight text-[var(--ink)]">
+                      {item.question}
+                    </span>
+                    <span
+                      className={cn(
+                        "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[color:rgba(199,163,90,0.28)] bg-white text-[var(--brand-burgundy)] transition duration-300",
+                        open ? "rotate-45" : "rotate-0",
+                      )}
+                    >
+                      +
+                    </span>
+                  </button>
+
+                  <div
+                    className={cn(
+                      "grid transition-all duration-300 ease-out",
+                      open ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0 mt-0",
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="text-base leading-7 text-[var(--muted)]">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -391,7 +503,7 @@ export default function HomePage() {
           </div>
 
           <a
-            href="tel:15555555555"
+            href="tel:17203271395"
             className="rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:opacity-95"
           >
             Call Now
@@ -457,7 +569,7 @@ export default function HomePage() {
 
           <div className="mt-8 flex flex-row flex-wrap gap-3">
             <a
-              href="tel:15555555555"
+              href="tel:17203271395"
               className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
             >
               Call for Free Estimate
@@ -593,38 +705,100 @@ export default function HomePage() {
           data-reveal
           className="card-tint rounded-[2rem] border border-[color:rgba(199,163,90,0.22)] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.05)] md:p-10"
         >
-          <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-center">
-            <div className="max-w-2xl">
+          <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-start">
+            <div className="max-w-xl">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
                 Free Estimate
               </p>
+
               <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">
                 Ready to restore the look of your carpet?
               </h2>
-              <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
-                Reach out for a free estimate and honest guidance on stretching,
-                patching, repair, and restoration options.
+
+              <p className="mt-5 max-w-lg text-lg leading-8 text-[var(--muted)]">
+                For estimates, please contact me at your convenience. I look
+                forward to meeting you soon and helping you decide on the best
+                repair option for your home.
               </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-[1.25rem] border border-[color:rgba(199,163,90,0.22)] bg-white/70 p-5">
+                  <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
+                    Service Area
+                  </p>
+                  <p className="mt-2 text-base font-medium text-[var(--ink)]">
+                    Denver, Colorado
+                  </p>
+                </div>
+
+                <div className="rounded-[1.25rem] border border-[color:rgba(199,163,90,0.22)] bg-white/70 p-5">
+                  <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
+                    Contact
+                  </p>
+                  <p className="mt-2 text-base font-medium text-[var(--ink)]">
+                    Ricky Brown
+                  </p>
+                  <p className="mt-1 text-sm text-[var(--muted)]">
+                    Untouchable Carpet Repair
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <a
-                href="tel:15555555555"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
-              >
-                Call Now
-              </a>
+            <div className="grid gap-5">
+              <div className="rounded-[1.5rem] border border-[color:rgba(199,163,90,0.22)] bg-white/75 p-6 shadow-sm">
+                <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
+                  Phone
+                </p>
+                <a
+                  href="tel:17203271395"
+                  className="mt-2 block text-2xl font-semibold tracking-tight text-[var(--ink)] transition hover:text-[var(--brand-burgundy)]"
+                >
+                  (720) 327-1395
+                </a>
+                <p className="mt-2 text-sm text-[var(--muted)]">
+                  Call for a free estimate
+                </p>
+              </div>
 
-              <a
-                href="#"
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.45)]"
-              >
-                Request Estimate
-              </a>
+              <div className="rounded-[1.5rem] border border-[color:rgba(199,163,90,0.22)] bg-white/75 p-6 shadow-sm">
+                <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
+                  Business Hours
+                </p>
+                <div className="mt-3 space-y-2 text-sm text-[var(--muted)]">
+                  <div className="flex items-center justify-between gap-4">
+                    <span>Monday – Saturday</span>
+                    <span className="font-medium text-[var(--ink)]">
+                      9:00am – 5:00pm
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <span>Sunday</span>
+                    <span className="font-medium text-[var(--ink)]">
+                      Closed
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-start md:justify-end">
+                <a
+                  href="tel:17203271395"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
+                >
+                  Schedule a Free Estimate
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <FAQSection items={faqItems} />
 
       <footer className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
         <div className="mx-auto max-w-6xl px-5 py-10 text-sm text-[var(--muted)]">

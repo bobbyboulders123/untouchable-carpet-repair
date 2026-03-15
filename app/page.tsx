@@ -47,6 +47,199 @@ const services = [
   },
 ];
 
+const beforeAfterItems = [
+  {
+    id: "stretching",
+    tab: "Project 1",
+    title: "Wrinkled Carpet Restored",
+    description:
+      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
+    beforeSrc: "/before01.png",
+    afterSrc: "/after01.png",
+  },
+  {
+    id: "repair",
+    tab: "Project 2",
+    title: "Damaged Area Repaired",
+    description:
+      "Targeted patching and repair work that helps extend carpet life without full replacement.",
+    beforeSrc: "/before02.png",
+    afterSrc: "/after02.png",
+  },
+  {
+    id: "water",
+    tab: "Project 3",
+    title: "Water-Damaged Section Recovered",
+    description:
+      "Selective restoration and replacement where needed for a more polished final result.",
+    beforeSrc: "/before03.png",
+    afterSrc: "/after03.png",
+  },
+];
+
+const reasons = [
+  {
+    title: "Craftsmanship Over Shortcuts",
+    text: "We focus on careful repair work that improves appearance, function, and longevity.",
+  },
+  {
+    title: "Experienced, Local Service",
+    text: "Decades of hands-on experience mean clearer recommendations and better finished results.",
+  },
+  {
+    title: "Respect for the Home",
+    text: "Professional, respectful service with a premium local feel from estimate to completion.",
+  },
+];
+
+function BeforeAfterShowcase({
+  items,
+}: {
+  items: {
+    id: string;
+    tab: string;
+    title: string;
+    description: string;
+    beforeSrc: string;
+    afterSrc: string;
+  }[];
+}) {
+  const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+  const [isTouchLike, setIsTouchLike] = useState(false);
+  const [showAfter, setShowAfter] = useState(false);
+
+  const activeItem = items.find((item) => item.id === activeId) ?? items[0];
+
+  useEffect(() => {
+    const media = window.matchMedia("(hover: none), (pointer: coarse)");
+    const update = () => setIsTouchLike(media.matches);
+    update();
+
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", update);
+      return () => media.removeEventListener("change", update);
+    }
+
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, []);
+
+  useEffect(() => {
+    setShowAfter(false);
+
+    if (!isTouchLike) return;
+
+    const start = window.setTimeout(() => {
+      setShowAfter(true);
+
+      const interval = window.setInterval(() => {
+        setShowAfter((prev) => !prev);
+      }, 2400);
+
+      return () => window.clearInterval(interval);
+    }, 2000);
+
+    return () => {
+      window.clearTimeout(start);
+    };
+  }, [activeId, isTouchLike]);
+
+  return (
+    <div data-reveal className="mt-12">
+      <div className="flex flex-wrap gap-3">
+        {items.map((item) => {
+          const active = item.id === activeId;
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setActiveId(item.id)}
+              className={cn(
+                "rounded-full border px-4 py-2 text-sm font-semibold transition duration-300",
+                active
+                  ? "border-[color:rgba(111,29,40,0.35)] bg-[var(--brand-burgundy)] text-white shadow-sm"
+                  : "border-[color:rgba(199,163,90,0.25)] bg-white text-[var(--ink)] hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.42)]",
+              )}
+            >
+              {item.tab}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="card-tint mt-6 rounded-[2rem] border border-[color:rgba(199,163,90,0.22)] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.05)] md:p-6">
+        <div
+          className="relative overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-white/70"
+          onMouseEnter={() => {
+            if (!isTouchLike) setShowAfter(true);
+          }}
+          onMouseLeave={() => {
+            if (!isTouchLike) setShowAfter(false);
+          }}
+        >
+          <div className="relative aspect-[16/10] md:aspect-[16/9]">
+            <Image
+              src={activeItem.beforeSrc}
+              alt={`${activeItem.title} before`}
+              fill
+              className={cn(
+                "object-cover transition-opacity duration-700",
+                showAfter ? "opacity-0" : "opacity-100",
+              )}
+              priority
+            />
+
+            <Image
+              src={activeItem.afterSrc}
+              alt={`${activeItem.title} after`}
+              fill
+              className={cn(
+                "object-cover transition-opacity duration-700",
+                showAfter ? "opacity-100" : "opacity-0",
+              )}
+              priority
+            />
+
+            <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between p-4">
+              <span
+                className={cn(
+                  "rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] backdrop-blur-sm transition",
+                  showAfter
+                    ? "bg-white/65 text-[var(--muted)]"
+                    : "bg-[color:rgba(111,29,40,0.88)] text-white",
+                )}
+              >
+                Before
+              </span>
+
+              <span
+                className={cn(
+                  "rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] backdrop-blur-sm transition",
+                  showAfter
+                    ? "bg-[color:rgba(199,163,90,0.9)] text-[var(--ink)]"
+                    : "bg-white/65 text-[var(--muted)]",
+                )}
+              >
+                After
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 max-w-3xl">
+          <h3 className="text-2xl font-semibold tracking-tight text-[var(--ink)]">
+            {activeItem.title}
+          </h3>
+          <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+            {activeItem.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -77,7 +270,8 @@ export default function HomePage() {
         }
       },
       {
-        threshold: 0.14,
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
       },
     );
 
@@ -119,19 +313,33 @@ export default function HomePage() {
             rgba(139, 39, 53, 0.08),
             rgba(199, 163, 90, 0.12)
           );
+
+          --card-gold-tint: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.96),
+            rgba(239, 230, 218, 0.78)
+          );
+
+          --card-stripe: linear-gradient(
+            90deg,
+            var(--brand-burgundy),
+            var(--brand-burgundy-2),
+            var(--brand-gold)
+          );
         }
 
         [data-reveal] {
           opacity: 0;
-          transform: translateY(18px);
+          transform: translateY(20px) scale(0.985);
           transition:
-            opacity 700ms ease,
-            transform 700ms ease;
+            opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
         }
 
         [data-reveal][data-in-view="true"] {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -150,6 +358,14 @@ export default function HomePage() {
           box-shadow:
             0 0 0 1px rgba(199, 163, 90, 0.22),
             0 20px 80px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-tint {
+          background: var(--card-gold-tint);
+        }
+
+        .accent-stripe {
+          background: var(--card-stripe);
         }
       `}</style>
 
@@ -196,9 +412,7 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-5 pb-18 pt-8 md:pb-24 md:pt-16">
         <div className="grid gap-8 md:grid-cols-[0.92fr_1.08fr] md:items-center md:gap-16">
-          {/* Mobile / desktop hero intro */}
           <div data-reveal className="md:contents">
-            {/* Mobile top row: logo left, headline right */}
             <div className="grid grid-cols-2 items-center gap-4 md:hidden">
               <div className="gold-ring rounded-[1.6rem] border border-[var(--line)] bg-white p-2">
                 <div className="relative overflow-hidden rounded-[1.2rem] bg-white aspect-square">
@@ -218,7 +432,6 @@ export default function HomePage() {
               </h1>
             </div>
 
-            {/* Desktop logo */}
             <div className="hidden md:flex md:justify-start">
               <div className="gold-ring w-full max-w-[520px] rounded-[2.25rem] border border-[var(--line)] bg-white p-4 md:p-6">
                 <div className="relative overflow-hidden rounded-[1.8rem] bg-white aspect-square">
@@ -233,7 +446,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Desktop headline */}
             <div className="hidden max-w-2xl md:block md:justify-self-end">
               <h1 className="text-4xl font-bold leading-[0.95] tracking-tight text-[var(--ink)] sm:text-6xl md:text-7xl">
                 Classy, trusted carpet repair with an old-school standard of
@@ -277,12 +489,14 @@ export default function HomePage() {
         className="border-y border-[var(--line)] bg-[var(--bg-soft)]"
       >
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-5 py-6 md:grid-cols-4 md:gap-4">
-          {trustItems.map((item) => (
+          {trustItems.map((item, index) => (
             <div
               key={item}
-              className="rounded-2xl border border-[color:rgba(199,163,90,0.22)] bg-[var(--surface-2)] px-4 py-4 text-sm font-semibold text-[var(--ink)] shadow-sm backdrop-blur-sm"
+              data-reveal
+              className="card-tint rounded-2xl border border-[color:rgba(199,163,90,0.22)] px-4 py-4 text-sm font-semibold text-[var(--ink)] shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.38)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.06)]"
+              style={{ transitionDelay: `${index * 45}ms` }}
             >
-              <div className="mb-2 h-1.5 w-10 rounded-full bg-[var(--brand-burgundy)]" />
+              <div className="accent-stripe mb-3 h-[3px] w-full rounded-full" />
               <div className="leading-5">{item}</div>
             </div>
           ))}
@@ -310,15 +524,12 @@ export default function HomePage() {
             <article
               key={service.title}
               data-reveal
-              className="group rounded-[1.75rem] border border-black/10 bg-white p-7 shadow-[0_16px_50px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[color:rgba(199,163,90,0.35)] hover:shadow-[0_24px_70px_rgba(0,0,0,0.08)]"
+              className="group card-tint rounded-[1.75rem] border border-[color:rgba(199,163,90,0.22)] p-7 shadow-[0_16px_50px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[color:rgba(199,163,90,0.38)] hover:shadow-[0_24px_70px_rgba(0,0,0,0.08)]"
               style={{
-                transitionDelay: `${index * 40}ms`,
+                transitionDelay: `${index * 55}ms`,
               }}
             >
-              <div className="mb-5 flex items-center gap-3">
-                <span className="h-1.5 w-12 rounded-full bg-[var(--brand-burgundy)]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-gold)]" />
-              </div>
+              <div className="accent-stripe mb-5 h-[3px] w-full rounded-full" />
 
               <h3 className="text-xl font-semibold tracking-tight text-[var(--ink)]">
                 {service.title}
@@ -331,6 +542,109 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <section className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
+        <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+          <div data-reveal className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
+              Before &amp; After
+            </p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">
+              Real improvement you can see.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
+              Carpet repair is a visual service. The right repair work can
+              transform loose, damaged, or worn areas into a cleaner and more
+              finished-looking space.
+            </p>
+          </div>
+
+          <BeforeAfterShowcase items={beforeAfterItems} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+        <div className="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
+          <div data-reveal className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
+              Why Choose Us
+            </p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">
+              A premium, repair-first approach built on experience.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
+              Our focus is simple: quality work, honest recommendations, and a
+              finished result that looks more polished and lasts longer.
+            </p>
+          </div>
+
+          <div className="grid gap-5">
+            {reasons.map((reason, index) => (
+              <article
+                key={reason.title}
+                data-reveal
+                className="card-tint rounded-[1.75rem] border border-[color:rgba(199,163,90,0.22)] p-6 shadow-[0_16px_40px_rgba(0,0,0,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[color:rgba(199,163,90,0.38)]"
+                style={{ transitionDelay: `${index * 55}ms` }}
+              >
+                <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+                <h3 className="text-xl font-semibold tracking-tight text-[var(--ink)]">
+                  {reason.title}
+                </h3>
+                <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                  {reason.text}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+        <div
+          data-reveal
+          className="card-tint rounded-[2rem] border border-[color:rgba(199,163,90,0.22)] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.05)] md:p-10"
+        >
+          <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
+                Free Estimate
+              </p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">
+                Ready to restore the look of your carpet?
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
+                Reach out for a free estimate and honest guidance on stretching,
+                patching, repair, and restoration options.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+              <a
+                href="tel:15555555555"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
+              >
+                Call Now
+              </a>
+
+              <a
+                href="#"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.45)]"
+              >
+                Request Estimate
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
+        <div className="mx-auto max-w-6xl px-5 py-10 text-sm text-[var(--muted)]">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>© {new Date().getFullYear()} Untouchable Carpet Repair.</div>
+            <div>Premium Carpet Repair &amp; Restoration</div>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

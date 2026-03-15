@@ -49,11 +49,11 @@ const services = [
 
 const beforeAfterItems = [
   {
-    id: "stretching",
+    id: "stain",
     tab: "Project 1",
-    title: "Wrinkled Carpet Restored",
+    title: "Stained Carpet Restored",
     description:
-      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
+      "Selective restoration and replacement where needed for a more polished final result.",
     beforeSrc: "/before01.png",
     afterSrc: "/after01.png",
   },
@@ -67,11 +67,12 @@ const beforeAfterItems = [
     afterSrc: "/after02.png",
   },
   {
-    id: "water",
+    id: "wrinkle",
     tab: "Project 3",
-    title: "Water-Damaged Section Recovered",
+    title: "Winkled Section Stretched",
+
     description:
-      "Selective restoration and replacement where needed for a more polished final result.",
+      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
     beforeSrc: "/before03.png",
     afterSrc: "/after03.png",
   },

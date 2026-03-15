@@ -323,7 +323,9 @@ function FAQSection({
                   <div
                     className={cn(
                       "grid transition-all duration-300 ease-out",
-                      open ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0 mt-0",
+                      open
+                        ? "grid-rows-[1fr] opacity-100 mt-4"
+                        : "grid-rows-[0fr] opacity-0 mt-0",
                     )}
                   >
                     <div className="overflow-hidden">
@@ -483,12 +485,12 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
-            <span className="relative h-11 w-11 overflow-hidden rounded-full border border-black/10 bg-white shadow-sm">
+            <span className="relative h-14 w-14 shrink-0">
               <Image
                 src="/logo.png"
                 alt="Untouchable Carpet Repair logo"
                 fill
-                className="object-contain p-1"
+                className="object-contain"
                 priority
               />
             </span>
@@ -801,11 +803,46 @@ export default function HomePage() {
 
       <FAQSection items={faqItems} />
 
-      <footer className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
-        <div className="mx-auto max-w-6xl px-5 py-10 text-sm text-[var(--muted)]">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div>© {new Date().getFullYear()} Untouchable Carpet Repair.</div>
-            <div>Premium Carpet Repair &amp; Restoration</div>
+      <footer className="relative border-t border-[var(--line)] bg-[var(--bg-soft)]">
+        <div className="pointer-events-none absolute inset-0 brand-gradient-soft opacity-30" />
+
+        <div className="relative mx-auto max-w-6xl px-5 py-10">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <span className="relative h-16 w-16 shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Untouchable Carpet Repair logo"
+                  fill
+                  className="object-contain"
+                />
+              </span>
+
+              <div className="leading-tight">
+                <div className="text-sm font-bold uppercase tracking-[0.22em] text-[var(--brand-burgundy)]">
+                  Untouchable Carpet Repair
+                </div>
+                <div className="text-sm text-[var(--muted)]">
+                  Premium Carpet Repair &amp; Restoration
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 text-sm text-[var(--muted)] md:text-right">
+              <div>Denver, Colorado</div>
+              <a
+                href="tel:17203271395"
+                className="font-medium text-[var(--ink)] transition hover:text-[var(--brand-burgundy)]"
+              >
+                (720) 327-1395
+              </a>
+              <div>Monday – Saturday: 9:00am – 5:00pm</div>
+            </div>
+          </div>
+
+          <div className="mt-8 border-t border-[var(--line)] pt-6 text-sm text-[var(--muted)]">
+            © {new Date().getFullYear()} Untouchable Carpet Repair. All rights
+            reserved.
           </div>
         </div>
       </footer>

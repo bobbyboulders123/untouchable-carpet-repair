@@ -126,27 +126,11 @@ function BeforeAfterShowcase({
 
   useEffect(() => {
     setShowAfter(false);
-
-    if (!isTouchLike) return;
-
-    const start = window.setTimeout(() => {
-      setShowAfter(true);
-
-      const interval = window.setInterval(() => {
-        setShowAfter((prev) => !prev);
-      }, 2400);
-
-      return () => window.clearInterval(interval);
-    }, 2000);
-
-    return () => {
-      window.clearTimeout(start);
-    };
   }, [activeId, isTouchLike]);
 
   return (
     <div data-reveal className="mt-12">
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap justify-center gap-3">
         {items.map((item) => {
           const active = item.id === activeId;
 
@@ -169,14 +153,19 @@ function BeforeAfterShowcase({
       </div>
 
       <div className="card-tint mt-6 rounded-[2rem] border border-[color:rgba(199,163,90,0.22)] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.05)] md:p-6">
-        <div
-          className="relative overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-white/70"
+        <button
+          type="button"
+          className="relative block w-full overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-white/70 text-left"
           onMouseEnter={() => {
             if (!isTouchLike) setShowAfter(true);
           }}
           onMouseLeave={() => {
             if (!isTouchLike) setShowAfter(false);
           }}
+          onClick={() => {
+            if (isTouchLike) setShowAfter((prev) => !prev);
+          }}
+          aria-label={showAfter ? "Show before image" : "Show after image"}
         >
           <div className="relative aspect-[16/10] md:aspect-[16/9]">
             <Image
@@ -225,7 +214,7 @@ function BeforeAfterShowcase({
               </span>
             </div>
           </div>
-        </div>
+        </button>
 
         <div className="mt-6 max-w-3xl">
           <h3 className="text-2xl font-semibold tracking-tight text-[var(--ink)]">

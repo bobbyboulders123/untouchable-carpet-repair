@@ -7,11 +7,12 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-const trustItems = [
-  "33 Years of Experience",
-  "Free Estimates",
-  "Professional, Respectful Service",
-  "Repair Before Replacement Mindset",
+const NAV_ITEMS = [
+  { href: "#services", label: "Services" },
+  { href: "#before-after", label: "Before & After" },
+  { href: "#why-choose-us", label: "Why Choose Us" },
+  { href: "#faq", label: "FAQ" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const services = [
@@ -49,11 +50,11 @@ const services = [
 
 const beforeAfterItems = [
   {
-    id: "stain",
+    id: "stretching",
     tab: "Project 1",
-    title: "Stained Carpet Restored",
+    title: "Wrinkled Carpet Restored",
     description:
-      "Selective restoration and replacement where needed for a more polished final result.",
+      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
     beforeSrc: "/before01.png",
     afterSrc: "/after01.png",
   },
@@ -67,12 +68,11 @@ const beforeAfterItems = [
     afterSrc: "/after02.png",
   },
   {
-    id: "wrinkle",
+    id: "water",
     tab: "Project 3",
-    title: "Winkled Section Stretched",
-
+    title: "Water-Damaged Section Recovered",
     description:
-      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
+      "Selective restoration and replacement where needed for a more polished final result.",
     beforeSrc: "/before03.png",
     afterSrc: "/after03.png",
   },
@@ -270,7 +270,10 @@ function FAQSection({
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
+    <section
+      id="faq"
+      className="border-t border-[var(--line)] bg-[var(--bg-soft)]"
+    >
       <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:items-start">
           <div data-reveal className="max-w-xl">
@@ -324,8 +327,8 @@ function FAQSection({
                     className={cn(
                       "grid transition-all duration-300 ease-out",
                       open
-                        ? "grid-rows-[1fr] opacity-100 mt-4"
-                        : "grid-rows-[0fr] opacity-0 mt-0",
+                        ? "mt-4 grid-rows-[1fr] opacity-100"
+                        : "mt-0 grid-rows-[0fr] opacity-0",
                     )}
                   >
                     <div className="overflow-hidden">
@@ -346,6 +349,7 @@ function FAQSection({
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -383,6 +387,14 @@ export default function HomePage() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const closeMenu = () => setMobileMenuOpen(false);
+    window.addEventListener("resize", closeMenu);
+    return () => window.removeEventListener("resize", closeMenu);
+  }, []);
+
+  const handleNavClick = () => setMobileMenuOpen(false);
 
   return (
     <main className="min-h-screen bg-[var(--bg)] text-[var(--ink)]">
@@ -483,39 +495,99 @@ export default function HomePage() {
       >
         <div className="pointer-events-none absolute inset-0 brand-gradient-soft opacity-40" />
 
-        <div className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="relative h-14 w-14 shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Untouchable Carpet Repair logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </span>
+        <div className="relative mx-auto max-w-6xl px-5 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="relative h-14 w-14 shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Untouchable Carpet Repair logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </span>
 
-            <div className="leading-tight">
-              <div className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-burgundy)] sm:text-sm">
-                Untouchable Carpet Repair
+              <div className="leading-tight">
+                <div className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-burgundy)] sm:text-sm">
+                  Untouchable Carpet Repair
+                </div>
+                <div className="text-xs text-[var(--muted)] sm:text-sm">
+                  Premium Carpet Repair &amp; Restoration
+                </div>
               </div>
-              <div className="text-xs text-[var(--muted)] sm:text-sm">
-                Premium Carpet Repair &amp; Restoration
-              </div>
+            </div>
+
+            <div className="hidden items-center gap-6 lg:flex">
+              <nav className="flex items-center gap-6">
+                {NAV_ITEMS.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm font-medium text-[var(--muted)] transition duration-300 hover:text-[var(--brand-burgundy)]"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+
+              <a
+                href="tel:17203271395"
+                className="rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:opacity-95"
+              >
+                Call Now
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3 lg:hidden">
+              <a
+                href="tel:17203271395"
+                className="rounded-full bg-[var(--ink)] px-4 py-2.5 text-sm font-semibold text-white transition duration-300 hover:opacity-95"
+              >
+                Call
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((prev) => !prev)}
+                className="rounded-full border border-[color:rgba(199,163,90,0.28)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--ink)] shadow-sm transition duration-300 hover:border-[color:rgba(199,163,90,0.45)]"
+                aria-expanded={mobileMenuOpen}
+                aria-label="Toggle navigation menu"
+              >
+                Menu
+              </button>
             </div>
           </div>
 
-          <a
-            href="tel:17203271395"
-            className="rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:opacity-95"
+          <div
+            className={cn(
+              "overflow-hidden transition-all duration-300 lg:hidden",
+              mobileMenuOpen
+                ? "max-h-96 pt-4 opacity-100"
+                : "max-h-0 pt-0 opacity-0",
+            )}
           >
-            Call Now
-          </a>
+            <div className="card-tint rounded-[1.5rem] border border-[color:rgba(199,163,90,0.22)] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.04)]">
+              <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+              <nav className="grid gap-2">
+                {NAV_ITEMS.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={handleNavClick}
+                    className="rounded-xl px-3 py-3 text-sm font-medium text-[var(--ink)] transition duration-300 hover:bg-white/70 hover:text-[var(--brand-burgundy)]"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
         </div>
       </header>
 
       <section className="mx-auto max-w-6xl px-5 pb-18 pt-8 md:pb-24 md:pt-16">
-        <div className="grid gap-8 md:grid-cols-[0.92fr_1.08fr] md:items-center md:gap-16">
+        <div className="grid gap-8 md:grid-cols-[0.92fr_1.08fr] md:items-start md:gap-16">
           <div data-reveal className="md:contents">
             <div className="grid grid-cols-2 items-center gap-4 md:hidden">
               <div className="gold-ring rounded-[1.6rem] border border-[var(--line)] bg-white p-2">
@@ -531,8 +603,7 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-[1.95rem] font-bold leading-[0.94] tracking-tight text-[var(--ink)]">
-                Classy, trusted carpet repair with an old-school standard of
-                quality.
+                Trusted carpet repair with an old-school standard of quality.
               </h1>
             </div>
 
@@ -552,58 +623,70 @@ export default function HomePage() {
 
             <div className="hidden max-w-2xl md:block md:justify-self-end">
               <h1 className="text-4xl font-bold leading-[0.95] tracking-tight text-[var(--ink)] sm:text-6xl md:text-7xl">
-                Classy, trusted carpet repair with an old-school standard of
-                quality.
+                Trusted carpet repair with an old-school standard of quality.
               </h1>
             </div>
           </div>
         </div>
 
-        <div data-reveal className="mt-8 max-w-2xl md:mt-10">
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
-            33 Years of Experience
-          </p>
+        <div
+          data-reveal
+          className="mt-8 grid gap-6 md:mt-6 md:grid-cols-[minmax(0,620px)_240px] md:items-start md:gap-4"
+        >
+          <div className="max-w-none">
+            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
+              33 Years of Experience
+            </p>
 
-          <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
-            Professional carpet stretching, patching, stain repair, threshold
-            replacement, and water-damaged carpet and pad restoration with a
-            polished, premium local-service feel.
-          </p>
+            <p className="max-w-[620px] text-lg leading-8 text-[var(--muted)]">
+              Professional carpet stretching, patching, stain repair, threshold
+              replacement, and water-damaged carpet and pad restoration with a
+              polished, premium local-service feel.
+            </p>
 
-          <div className="mt-8 flex flex-row flex-wrap gap-3">
-            <a
-              href="tel:17203271395"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
-            >
-              Call for Free Estimate
-            </a>
+            <div className="mt-8 flex flex-row flex-wrap gap-3">
+              <a
+                href="tel:17203271395"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
+              >
+                Call for Free Estimate
+              </a>
 
-            <a
-              href="#services"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.45)] hover:bg-[color:rgba(255,255,255,0.9)]"
-            >
-              View Services
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section
-        data-reveal
-        className="border-y border-[var(--line)] bg-[var(--bg-soft)]"
-      >
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-5 py-6 md:grid-cols-4 md:gap-4">
-          {trustItems.map((item, index) => (
-            <div
-              key={item}
-              data-reveal
-              className="card-tint rounded-2xl border border-[color:rgba(199,163,90,0.22)] px-4 py-4 text-sm font-semibold text-[var(--ink)] shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.38)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.06)]"
-              style={{ transitionDelay: `${index * 45}ms` }}
-            >
-              <div className="accent-stripe mb-3 h-[3px] w-full rounded-full" />
-              <div className="leading-5">{item}</div>
+              <a
+                href="#services"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.45)] hover:bg-[color:rgba(255,255,255,0.9)]"
+              >
+                View Services
+              </a>
             </div>
-          ))}
+          </div>
+
+          <aside className="card-tint rounded-[1.5rem] border border-[color:rgba(199,163,90,0.22)] p-5 shadow-[0_16px_40px_rgba(0,0,0,0.04)] md:-mt-24">
+            <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
+              BBB Accredited
+            </p>
+            <p className="mt-2 text-base font-medium text-[var(--ink)]">
+              A+ Rated Business
+            </p>
+            <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+              BBB Accredited since 2021. Trusted residential carpet repair in
+              Denver.
+            </p>
+
+            <a
+              href="https://www.bbb.org/us/co/denver/profile/carpet-and-rug-repair/untouchable-carpet-repair-1296-1000108992"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex min-h-10 items-center justify-center rounded-full border border-[color:rgba(199,163,90,0.28)] bg-white px-4 py-2 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.42)] hover:text-[var(--brand-burgundy)]"
+            >
+              View BBB Profile
+            </a>
+
+            <p className="mt-3 text-xs leading-5 text-[var(--muted)]">
+              Replace this panel later with the official BBB Dynamic Seal embed.
+            </p>
+          </aside>
         </div>
       </section>
 
@@ -647,7 +730,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-[var(--line)] bg-[var(--bg-soft)]">
+      <section
+        id="before-after"
+        className="border-t border-[var(--line)] bg-[var(--bg-soft)]"
+      >
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-24">
           <div data-reveal className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
@@ -667,7 +753,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 py-20 md:py-24">
+      <section
+        id="why-choose-us"
+        className="mx-auto max-w-6xl px-5 py-20 md:py-24"
+      >
         <div className="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
           <div data-reveal className="max-w-xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">

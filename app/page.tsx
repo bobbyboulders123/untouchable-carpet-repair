@@ -50,11 +50,11 @@ const services = [
 
 const beforeAfterItems = [
   {
-    id: "stretching",
+    id: "stain-removal",
     tab: "Project 1",
-    title: "Wrinkled Carpet Restored",
+    title: "Stain Removal",
     description:
-      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
+      "Targeted stain removal and restoration work that helps improve the appearance of the carpet without full replacement.",
     beforeSrc: "/before01.png",
     afterSrc: "/after01.png",
   },
@@ -68,11 +68,11 @@ const beforeAfterItems = [
     afterSrc: "/after02.png",
   },
   {
-    id: "water",
+    id: "wrinkled-carpet",
     tab: "Project 3",
-    title: "Water-Damaged Section Recovered",
+    title: "Wrinkled Carpet Restored",
     description:
-      "Selective restoration and replacement where needed for a more polished final result.",
+      "Professional stretching that removes waves and brings the room back to a cleaner, tighter finish.",
     beforeSrc: "/before03.png",
     afterSrc: "/after03.png",
   },
@@ -530,7 +530,7 @@ export default function HomePage() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        className="pointer-events-none fixed left-0 top-0 z-0 h-[100svh] w-full overflow-hidden [transform:translateZ(0)]"
       >
         <Image
           src="/room-bg.png"

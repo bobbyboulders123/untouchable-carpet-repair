@@ -649,7 +649,6 @@ export default function HomePage() {
             data-reveal
             className="card-tint rounded-[2.3rem] border border-white/55 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl md:p-8 lg:p-10"
           >
-
             <div className="grid gap-8 lg:grid-cols-[430px_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-8">
               <div className="order-1 lg:col-start-1 lg:row-start-1">
                 <div className="gold-ring mx-auto w-full max-w-[330px] rounded-[2rem] border border-[var(--line)] bg-white/72 p-4 backdrop-blur-md lg:max-w-[430px] lg:p-6">
@@ -716,8 +715,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="services" className="mx-auto max-w-6xl px-5 py-20 md:py-24">
-          <div data-reveal className="max-w-2xl">
+        <section
+          id="services"
+          className="mx-auto max-w-6xl px-5 py-20 md:py-24"
+        >
+          <div
+            data-reveal
+            className="card-tint max-w-3xl rounded-[2rem] border border-white/50 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl md:p-8"
+          >
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
               Services
             </p>
@@ -784,7 +789,10 @@ export default function HomePage() {
           className="mx-auto max-w-6xl px-5 py-20 md:py-24"
         >
           <div className="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
-            <div data-reveal className="max-w-xl">
+            <div
+              data-reveal
+              className="card-tint max-w-3xl rounded-[2rem] border border-white/50 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl md:p-8"
+            >
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
                 Why Choose Us
               </p>

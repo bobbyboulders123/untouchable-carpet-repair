@@ -631,7 +631,7 @@ export default function HomePage() {
 
         <div
           data-reveal
-          className="mt-8 grid gap-6 md:mt-6 md:grid-cols-[minmax(0,620px)_240px] md:items-start md:gap-4"
+          className="mt-8 grid gap-6 md:mt-6 md:grid-cols-[minmax(0,1fr)_240px] md:items-start md:gap-4"
         >
           <div className="max-w-none">
             <p className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">

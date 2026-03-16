@@ -1,6 +1,6 @@
 "use client";
-
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function cn(...classes: Array<string | false | null | undefined>) {
@@ -586,6 +586,13 @@ export default function HomePage() {
                     {item.label}
                   </a>
                 ))}
+
+                <Link
+                  href="/legal"
+                  className="text-sm font-medium text-[var(--muted)] transition duration-300 hover:text-[var(--brand-burgundy)]"
+                >
+                  Legal
+                </Link>
               </nav>
 
               <a
@@ -637,6 +644,14 @@ export default function HomePage() {
                     {item.label}
                   </a>
                 ))}
+
+                <Link
+                  href="/legal"
+                  onClick={handleNavClick}
+                  className="rounded-xl px-3 py-3 text-sm font-medium text-[var(--ink)] transition duration-300 hover:bg-white/70 hover:text-[var(--brand-burgundy)]"
+                >
+                  Legal
+                </Link>
               </nav>
             </div>
           </div>

@@ -129,28 +129,25 @@ function BBBCard({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="accent-stripe mb-4 h-[3px] w-full rounded-full" />
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-burgundy)]">
-        BBB Accredited
-      </p>
-      <p className="mt-2 text-base font-medium text-[var(--ink)]">
-        A+ Rated Business
-      </p>
-      <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-        BBB Accredited since 2021. Trusted residential carpet repair in Denver.
-      </p>
+      <div className="flex justify-center">
+        <a
+          href="https://www.bbb.org/us/co/denver/profile/carpet-and-rug-repair/untouchable-carpet-repair-1296-1000108992/#sealclick"
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          aria-label="View Untouchable Carpet Repair BBB profile"
+          className="transition duration-300 hover:scale-[1.02]"
+        >
+          <img
+            src="https://seal-alaskaoregonwesternwashington.bbb.org/seals/blue-seal-187-130-bbb-1000108992.png"
+            alt="Untouchable Carpet Repair BBB Business Review"
+            className="h-auto w-[187px] max-w-full"
+            style={{ border: 0 }}
+          />
+        </a>
+      </div>
 
-      <a
-        href="https://www.bbb.org/us/co/denver/profile/carpet-and-rug-repair/untouchable-carpet-repair-1296-1000108992"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-4 inline-flex min-h-10 items-center justify-center rounded-full border border-[color:rgba(199,163,90,0.28)] bg-white px-4 py-2 text-sm font-semibold text-[var(--ink)] transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.42)] hover:text-[var(--brand-burgundy)]"
-      >
-        View BBB Profile
-      </a>
-
-      <p className="mt-3 text-xs leading-5 text-[var(--muted)]">
-        Replace this panel later with the official BBB Dynamic Seal embed.
+      <p className="mt-4 text-center text-sm leading-6 text-[var(--muted)]">
+        Official BBB Accredited Business seal.
       </p>
     </div>
   );
@@ -662,10 +659,10 @@ export default function HomePage() {
         <section className="mx-auto max-w-6xl px-5 pb-20 pt-8 md:pb-24 md:pt-14">
           <div
             data-reveal
-            className="card-tint rounded-[2.3rem] border border-white/55 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl md:p-8 lg:p-10"
+            className="card-tint rounded-[2.3rem] border border-white/55 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.08)] backdrop-blur-xl md:p-7 lg:px-8 lg:pt-8 lg:pb-6"
           >
-            <div className="grid gap-8 lg:grid-cols-[430px_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-8">
-              <div className="order-1 lg:col-start-1 lg:row-start-1">
+            <div className="grid gap-8 lg:grid-cols-[430px_minmax(0,1fr)] lg:items-start lg:gap-x-10">
+              <div className="order-1">
                 <div className="gold-ring mx-auto w-full max-w-[330px] rounded-[2rem] border border-[var(--line)] bg-white/72 p-4 backdrop-blur-md lg:max-w-[430px] lg:p-6">
                   <div className="relative aspect-square overflow-hidden rounded-[1.6rem] bg-white">
                     <Image
@@ -677,16 +674,30 @@ export default function HomePage() {
                     />
                   </div>
                 </div>
+
+                <div className="mt-6 hidden lg:flex lg:flex-row lg:flex-wrap lg:gap-3">
+                  <a
+                    href="tel:17203271395"
+                    className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"
+                  >
+                    Call for Free Estimate
+                  </a>
+
+                  <a
+                    href="#services"
+                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/10 bg-white/85 px-5 py-3 text-sm font-semibold text-[var(--ink)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:border-[color:rgba(199,163,90,0.45)] hover:bg-white"
+                  >
+                    View Services
+                  </a>
+                </div>
               </div>
 
-              <div className="order-2 lg:col-start-2 lg:row-start-1">
-                <h1 className="max-w-none text-[2.8rem] font-bold leading-[0.94] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-6xl">
+              <div className="order-2 min-w-0">
+                <h1 className="max-w-none text-[2.8rem] font-bold leading-[0.94] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
                   Trusted carpet repair with an old-school standard of quality.
                 </h1>
-              </div>
 
-              <div className="order-3 lg:col-start-2 lg:row-start-2">
-                <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start lg:gap-x-8">
+                <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start lg:gap-x-8">
                   <div className="max-w-xl">
                     <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
                       33 Years of Experience
@@ -705,8 +716,8 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="order-4 lg:col-start-1 lg:row-start-2">
-                <div className="flex flex-row flex-wrap gap-3 lg:pt-2">
+              <div className="order-4 lg:hidden">
+                <div className="flex flex-row flex-wrap gap-3">
                   <a
                     href="tel:17203271395"
                     className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-burgundy)] px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-burgundy-2)]"

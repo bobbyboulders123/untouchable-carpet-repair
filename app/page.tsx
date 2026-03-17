@@ -747,7 +747,7 @@ export default function HomePage() {
         >
           <div
             data-reveal
-            className="card-tint max-w-3xl rounded-[2rem] border border-white/50 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl md:p-8"
+            className="card-tint mx-auto max-w-3xl rounded-[2rem] border border-white/50 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl md:p-8"
           >
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand-burgundy)]">
               Services

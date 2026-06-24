@@ -138,6 +138,7 @@ function BBBCard({ className }: { className?: string }) {
           aria-label="View Untouchable Carpet Repair BBB profile"
           className="transition duration-300 hover:scale-[1.02]"
         >
+          {/* eslint-disable-next-line @next/next/no-img-element -- BBB seal is hosted on a third-party seal domain not configured for next/image remote optimization. */}
           <img
             src="https://seal-alaskaoregonwesternwashington.bbb.org/seals/blue-seal-187-130-bbb-1000108992.png"
             alt="Untouchable Carpet Repair BBB Business Review"
@@ -166,11 +167,21 @@ function BeforeAfterShowcase({
     afterSrc: string;
   }[];
 }) {
-  const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+  const initialActiveId = items[0]?.id ?? "";
+  const [activeId, setActiveId] = useState(initialActiveId);
   const [isTouchLike, setIsTouchLike] = useState(false);
-  const [showAfter, setShowAfter] = useState(false);
+  const [showAfterState, setShowAfterState] = useState({
+    activeId: initialActiveId,
+    isTouchLike: false,
+    value: false,
+  });
 
   const activeItem = items.find((item) => item.id === activeId) ?? items[0];
+  const showAfter =
+    showAfterState.activeId === activeId &&
+    showAfterState.isTouchLike === isTouchLike
+      ? showAfterState.value
+      : false;
 
   useEffect(() => {
     const media = window.matchMedia("(hover: none), (pointer: coarse)");
@@ -185,10 +196,6 @@ function BeforeAfterShowcase({
     media.addListener(update);
     return () => media.removeListener(update);
   }, []);
-
-  useEffect(() => {
-    setShowAfter(false);
-  }, [activeId, isTouchLike]);
 
   return (
     <div data-reveal className="mt-12">
@@ -219,13 +226,27 @@ function BeforeAfterShowcase({
           type="button"
           className="relative block w-full overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-white/70 text-left"
           onMouseEnter={() => {
-            if (!isTouchLike) setShowAfter(true);
+            if (!isTouchLike) {
+              setShowAfterState({ activeId, isTouchLike, value: true });
+            }
           }}
           onMouseLeave={() => {
-            if (!isTouchLike) setShowAfter(false);
+            if (!isTouchLike) {
+              setShowAfterState({ activeId, isTouchLike, value: false });
+            }
           }}
           onClick={() => {
-            if (isTouchLike) setShowAfter((prev) => !prev);
+            if (isTouchLike) {
+              setShowAfterState((prev) => ({
+                activeId,
+                isTouchLike,
+                value:
+                  prev.activeId === activeId &&
+                  prev.isTouchLike === isTouchLike
+                    ? !prev.value
+                    : true,
+              }));
+            }
           }}
           aria-label={showAfter ? "Show before image" : "Show after image"}
         >

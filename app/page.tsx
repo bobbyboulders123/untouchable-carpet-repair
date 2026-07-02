@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import ServiceAreaMap from "./components/ServiceAreaMap";
+import ServiceAreaGraphic from "./components/ServiceAreaGraphic";
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -901,7 +901,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <ServiceAreaMap />
+              <ServiceAreaGraphic />
             </div>
           </div>
         </section>

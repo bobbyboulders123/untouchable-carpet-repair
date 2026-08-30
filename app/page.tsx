@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import ServiceAreaGraphic from "./components/ServiceAreaGraphic";
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -901,7 +900,20 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <ServiceAreaGraphic />
+              <div
+                data-reveal
+                className="rounded-[2rem] border border-[color:rgba(199,163,90,0.3)] bg-[#21191a] p-3 shadow-[0_20px_60px_rgba(31,23,21,0.18)] md:p-5"
+              >
+                <div className="relative aspect-[580/430] min-h-[280px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#291e20]">
+                  <Image
+                    src="/service-area-map.png"
+                    alt="Map-style graphic showing Untouchable Carpet Repair service area around Denver, Colorado"
+                    fill
+                    sizes="(min-width: 1024px) 620px, calc(100vw - 64px)"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
